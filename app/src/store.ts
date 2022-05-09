@@ -8,15 +8,24 @@ export interface Todo {
 }
 
 const TODOS = 'Todos';
+const LIST = 'LIST';
 
 export const todoApi = createApi({
   reducerPath: 'todoApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/' }),
   tagTypes: [TODOS],
-  endpoints: build => ({
+  endpoints: (build) => ({
     getAll: build.query<Todo[], void>({
       query: () => `todos`,
-      providesTags: [{ type: TODOS, id: 'LIST' }],
+      providesTags: [{ type: TODOS, id: LIST }],
+    }),
+    updateTodo: build.mutation<Todo, Todo>({
+      query: (todo: Todo) => ({
+        url: `todos/${todo.id}`,
+        method: 'PUT',
+        body: todo,
+      }),
+      invalidatesTags: [{ type: TODOS, id: LIST }],
     }),
   }),
 });

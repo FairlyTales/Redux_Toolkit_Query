@@ -1,9 +1,15 @@
 import React from 'react';
 import './App.css';
-import { todoApi } from './store';
+import { Todo, todoApi } from './store';
 
 const App = () => {
   const { data: todos } = todoApi.useGetAllQuery();
+  const [updateTodo] = todoApi.useUpdateTodoMutation();
+
+  const handleToggle = (todo: Todo) => updateTodo({
+    ...todo,
+    done: !todo.done,
+  });
 
   return (
     <div className='App'>
@@ -13,6 +19,8 @@ const App = () => {
             <div className='container'>
               <input
                 type='checkbox'
+                checked={todo.done}
+                onChange={() => handleToggle(todo)}
                 id={`id-${todo.id}`}
                 name={`id-${todo.text}`}
               />
