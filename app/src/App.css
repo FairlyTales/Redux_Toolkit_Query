@@ -10,7 +10,13 @@ body {
 .App {
   max-width: 800px;
   margin: auto;
+  padding: 3rem 0;
   font-size: 2rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
 }
 
 input, button {
@@ -25,6 +31,8 @@ input, button {
 
 .todos input {
   padding-top: 0.5rem;
+  width: 20px;
+  height: 20px;
 }
 
 .todos input[type='checkbox'] {
