@@ -15,7 +15,7 @@ export const todoApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/' }),
   tagTypes: [TODOS],
   endpoints: (build) => ({
-    getAll: build.query<Todo[], void>({
+    getTodos: build.query<Todo[], void>({
       query: () => `todos`,
       providesTags: [{ type: TODOS, id: LIST }],
     }),
@@ -31,6 +31,16 @@ export const todoApi = createApi({
       query: (todo: Todo) => ({
         url: `todos/${todo.id}`,
         method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: TODOS, id: LIST }],
+    }),
+    addTodo: build.mutation<string, string>({
+      query: (text) => ({
+        url: `todos`,
+        method: 'POST',
+        body: {
+          text,
+        },
       }),
       invalidatesTags: [{ type: TODOS, id: LIST }],
     }),

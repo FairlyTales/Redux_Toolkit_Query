@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Todo, todoApi } from './store';
 
 const App = () => {
-  const { data: todos } = todoApi.useGetAllQuery();
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const { data: todos } = todoApi.useGetTodosQuery();
   const [updateTodo] = todoApi.useUpdateTodoMutation();
   const [deleteTodo] = todoApi.useDeleteTodoMutation();
+  const [addTodo] = todoApi.useAddTodoMutation();
 
   const handleToggle = (todo: Todo) => updateTodo({
     ...todo,
@@ -13,6 +16,11 @@ const App = () => {
   });
 
   const handleDelete = (todo: Todo) => deleteTodo(todo);
+
+  const handleAdd = () => {
+    addTodo(inputValue);
+    setInputValue('');
+  };
 
   return (
     <div className='App'>
@@ -32,6 +40,14 @@ const App = () => {
             <button onClick={() => handleDelete(todo)}>Delete</button>
           </React.Fragment>
         ))}
+      </div>
+      <div className='add'>
+        <input
+          type='text'
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button onClick={handleAdd}>Add</button>
       </div>
     </div>
   );
