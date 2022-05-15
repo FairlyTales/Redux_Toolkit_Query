@@ -1,3 +1,3 @@
 # Redux Toolkit Query
 
-Playing with Redux-Toolkit data fetching package
+Checking out Redux-Toolkit data fetching package
